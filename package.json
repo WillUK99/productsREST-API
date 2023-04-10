@@ -20,7 +20,8 @@
     "nodemon": "^2.0.22",
     "pino": "^8.11.0",
     "pino-pretty": "^10.0.0",
-    "yup": "^1.0.2"
+    "yup": "^1.0.2",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
