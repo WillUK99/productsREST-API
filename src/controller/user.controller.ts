@@ -20,10 +20,8 @@ export const getUserByIdHandler = asyncHandler(async (req: Request, res: Respons
 })
 
 export const createUserHandler = asyncHandler(async (req: Request<{}, {}, CreateUserInput['body']>, res: Response) => {
-  const { email, password, name } = req.body
-
   try {
-    const user = await createUser({ email, password, name })
+    const user = await createUser(req.body)
     return res.json(user)
   } catch (e) {
     log.error(e)

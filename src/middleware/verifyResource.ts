@@ -10,7 +10,7 @@ const verifyResource = (schema: AnyZodObject) => (req: Request, res: Response, n
     })
     next()
   } catch (e: any) {
-    res.status(400).send(e.errors)
+    res.sendStatus(400)
   }
 }
 
