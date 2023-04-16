@@ -2,13 +2,16 @@ import { Request, Response, NextFunction } from 'express'
 
 import User from '../model/user.model'
 import asyncHandler from '../utils/asyncHandler'
+import log from '../logger'
+import { createUser } from '../service/user.service'
+import { CreateUserInput } from '../schema/user.schema'
 
-export const getUsers = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+export const getUsersHandler = asyncHandler(async (req: Request, res: Response) => {
   const users = await User.find()
   res.json(users)
 })
 
-export const getUserById = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+export const getUserByIdHandler = asyncHandler(async (req: Request, res: Response) => {
   const user = await User.findById(req.params.id)
   if (!user) {
     return res.sendStatus(404)
@@ -16,10 +19,14 @@ export const getUserById = asyncHandler(async (req: Request, res: Response, next
   res.json(user)
 })
 
-export const createUser = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+export const createUserHandler = asyncHandler(async (req: Request<{}, {}, CreateUserInput['body']>, res: Response) => {
   const { email, password, name } = req.body
-  const user = new User({ email, password, name })
-  user.save()
-    .then((user) => res.json(user))
-    .catch(next)
+
+  try {
+    const user = await createUser({ email, password, name })
+    return res.json(user)
+  } catch (e) {
+    log.error(e)
+    return res.sendStatus(409)
+  }
 })

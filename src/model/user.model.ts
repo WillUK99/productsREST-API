@@ -2,10 +2,13 @@ import mongoose from "mongoose"
 import bcrypt from "bcrypt"
 import config from "config"
 
-export type UserDocument = mongoose.Document & {
+export type UserInput = {
   email: string
   name: string
   password: string
+}
+
+export type UserDocument = mongoose.Document & UserInput & {
   createdAt: Date
   updatedAt: Date
   comparePassword: (newPassword: string) => Promise<boolean>
