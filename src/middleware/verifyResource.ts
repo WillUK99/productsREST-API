@@ -3,7 +3,7 @@ import { AnyZodObject } from 'zod'
 
 const verifyResource = (schema: AnyZodObject) => (req: Request, res: Response, next: NextFunction) => {
   try {
-    schema.parse({
+    schema.parseAsync({
       body: req.body,
       params: req.params,
       query: req.query

@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
+import { omit } from 'lodash'
 
 import User from '../model/user.model'
 import asyncHandler from '../utils/asyncHandler'
@@ -22,8 +23,8 @@ export const getUserByIdHandler = asyncHandler(async (req: Request, res: Respons
 export const createUserHandler = asyncHandler(async (req: Request<{}, {}, CreateUserInput['body']>, res: Response) => {
   try {
     const user = await createUser(req.body)
-    return res.json(user)
-  } catch (e) {
+    return res.json(omit(user.toJSON(), 'password'))
+  } catch (e: any) {
     log.error(e)
     return res.sendStatus(409)
   }
