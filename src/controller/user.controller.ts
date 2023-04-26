@@ -1,8 +1,8 @@
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response } from 'express'
 import { omit } from 'lodash'
 
 import User from '../model/user.model'
-import asyncHandler from '../utils/asyncHandler'
+import { asyncHandler } from '../utils/async.utils'
 import log from '../logger'
 import { createUser } from '../service/user.service'
 import { CreateUserInput } from '../schema/user.schema'
@@ -23,7 +23,7 @@ export const getUserByIdHandler = asyncHandler(async (req: Request, res: Respons
 export const createUserHandler = asyncHandler(async (req: Request<{}, {}, CreateUserInput['body']>, res: Response) => {
   try {
     const user = await createUser(req.body)
-    return res.json(omit(user.toJSON(), 'password'))
+    return res.json(user)
   } catch (e: any) {
     log.error(e)
     return res.sendStatus(409)

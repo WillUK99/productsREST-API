@@ -52,6 +52,6 @@ userSchema.methods.comparePassword = async function (newPassword: string): Promi
   return bcrypt.compare(newPassword, user.password).catch((e: any) => false)
 }
 
-const UserModel = mongoose.model("User", userSchema)
+const UserModel = mongoose.model<UserDocument>("User", userSchema)
 
 export default UserModel
