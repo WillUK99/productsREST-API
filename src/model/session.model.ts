@@ -1,8 +1,10 @@
 import mongoose from "mongoose"
 import config from "config"
 
+import { UserDocument } from "./user.model"
+
 export type SessionDocument = mongoose.Document & {
-  userId: string
+  userId: UserDocument['_id']
   isValid: boolean
   createdAt: Date
   updatedAt: Date
@@ -24,3 +26,5 @@ const sessionSchema = new mongoose.Schema({
 })
 
 const SessionModel = mongoose.model("Session", sessionSchema)
+
+export default SessionModel
