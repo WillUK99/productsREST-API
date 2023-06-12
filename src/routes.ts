@@ -11,11 +11,11 @@ const routes = (app: Express) => {
 
   // User routes
   app.get('/api/users', UserController.getUsersHandler)
-  app.get('/api/users/:id', UserController.getUserByIdHandler)
   app.post('/api/users', verifyResource(createUserSchema), UserController.createUserHandler)
 
   // Session routes
-  app.post('/api/session', verifyResource(createSessionSchema), SessionController.createSessionHandler)
+  app.get('/api/sessions', SessionController.getUserSessionsHandler)
+  app.post('/api/sessions', verifyResource(createSessionSchema), SessionController.createUserSessionHandler)
 }
 
 export default routes

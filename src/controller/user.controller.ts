@@ -12,14 +12,6 @@ export const getUsersHandler = asyncHandler(async (req: Request, res: Response) 
   res.json(users)
 })
 
-export const getUserByIdHandler = asyncHandler(async (req: Request, res: Response) => {
-  const user = await User.findById(req.params.id)
-  if (!user) {
-    return res.sendStatus(404)
-  }
-  res.json(user)
-})
-
 export const createUserHandler = asyncHandler(async (req: Request<{}, {}, CreateUserInput['body']>, res: Response) => {
   try {
     const user = await createUser(req.body)

@@ -2,13 +2,13 @@ import { Request, Response } from 'express'
 
 import log from '../logger'
 import { asyncHandler } from '../utils/async.utils'
-import { createSession } from '../service/session.service'
+import { createSession, findSessions } from '../service/session.service'
 import { CreateSessionInput } from '../schema/session.schema'
 import { validateUser } from '../service/user.service'
 import { signJWT } from '../utils/jwt.utils'
 import config from 'config'
 
-export const createSessionHandler = asyncHandler(async (req: Request<{}, {}, CreateSessionInput['body']>, res: Response) => {
+export const createUserSessionHandler = asyncHandler(async (req: Request<{}, {}, CreateSessionInput['body']>, res: Response) => {
   try {
     const { email, password } = req.body
 
@@ -28,4 +28,9 @@ export const createSessionHandler = asyncHandler(async (req: Request<{}, {}, Cre
   }
 })
 
+export const getUserSessionsHandler = asyncHandler(async (req: Request, res: Response) => {
+  const userId = req.locals.user._id
+  const userSession = await findSessions({ user: userId, valid: true })
+  return res.json(userSession)
+})
 
