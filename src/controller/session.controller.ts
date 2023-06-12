@@ -14,7 +14,7 @@ export const createUserSessionHandler = asyncHandler(async (req: Request<{}, {},
 
     const user = await validateUser(email, password)
     if (!user) return res.sendStatus(401)
-    console.log(user)
+
     const session = await createSession(user._id)
     if (!session) return res.sendStatus(409)
 
@@ -29,7 +29,8 @@ export const createUserSessionHandler = asyncHandler(async (req: Request<{}, {},
 })
 
 export const getUserSessionsHandler = asyncHandler(async (req: Request, res: Response) => {
-  const userId = req.locals.user._id
+  console.log('***RES =>', res.locals.user)
+  const userId = res.locals.user._id
   const userSession = await findSessions({ user: userId, valid: true })
   return res.json(userSession)
 })

@@ -5,6 +5,7 @@ import { createUserSchema } from './schema/user.schema'
 import { createSessionSchema } from './schema/session.schema'
 import * as UserController from './controller/user.controller'
 import * as SessionController from './controller/session.controller'
+import requireUser from './middleware/requireUser'
 
 const routes = (app: Express) => {
   app.get('/api/healthcheck', (req: Request, res: Response) => res.sendStatus(200))
@@ -14,7 +15,7 @@ const routes = (app: Express) => {
   app.post('/api/users', verifyResource(createUserSchema), UserController.createUserHandler)
 
   // Session routes
-  app.get('/api/sessions', SessionController.getUserSessionsHandler)
+  app.get('/api/sessions', requireUser, SessionController.getUserSessionsHandler)
   app.post('/api/sessions', verifyResource(createSessionSchema), SessionController.createUserSessionHandler)
 }
 

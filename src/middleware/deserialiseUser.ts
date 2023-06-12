@@ -7,8 +7,8 @@ const deserialiseUser = (req: Request, res: Response, next: NextFunction) => {
 
   if (!accessToken) return next()
 
-  const { decodedToken } = verifyJWT(accessToken, 'accessTokenPublicKey')
-
+  const { decodedToken, expired } = verifyJWT(accessToken, 'accessTokenPublicKey')
+  console.log(decodedToken)
   if (decodedToken) {
 
     res.locals.user = decodedToken
