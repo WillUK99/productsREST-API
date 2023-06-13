@@ -17,6 +17,7 @@ const routes = (app: Express) => {
   // Session routes
   app.get('/api/sessions', requireUser, SessionController.getUserSessionsHandler)
   app.post('/api/sessions', verifyResource(createSessionSchema), SessionController.createUserSessionHandler)
+  app.delete('/api/sessions', requireUser, SessionController.deleteUserSessionHandler)
 }
 
 export default routes

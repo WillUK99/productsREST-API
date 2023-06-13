@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 
 import log from '../logger'
 import { asyncHandler } from '../utils/async.utils'
-import { createSession, findSessions } from '../service/session.service'
+import { createSession, findSessions, updateSession } from '../service/session.service'
 import { CreateSessionInput } from '../schema/session.schema'
 import { validateUser } from '../service/user.service'
 import { signJWT } from '../utils/jwt.utils'
@@ -34,3 +34,11 @@ export const getUserSessionsHandler = asyncHandler(async (req: Request, res: Res
   return res.send(userSession)
 })
 
+export const deleteUserSessionHandler = asyncHandler(async (req: Request, res: Response) => {
+  const sessionId = res.locals.user.session
+  await updateSession({ _id: sessionId }, { isValid: false })
+  return res.json({
+    accessToken: null,
+    refreshToken: null,
+  })
+})
