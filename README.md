@@ -1,1 +1,1 @@
-Small project to scaffold out and build an api with ts & learn some mongoDB :) .
+Small API to manage users and products. Built with express 
