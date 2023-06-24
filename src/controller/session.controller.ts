@@ -1,5 +1,4 @@
 import { Request, Response } from 'express'
-
 import log from '../logger'
 import { asyncHandler } from '../utils/async.utils'
 import { createSession, findSessions, updateSession } from '../service/session.service'
