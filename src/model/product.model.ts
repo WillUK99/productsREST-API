@@ -2,17 +2,20 @@ import mongoose from "mongoose"
 import { customAlphabet } from "nanoid"
 import { UserDocument } from "./user.model"
 
-const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 10)
-
-export type ProductDocument = mongoose.Document & {
+export type ProductInput = {
   userId: UserDocument['_id'],
   title: string,
   description: string,
   price: number,
   image: string,
+}
+
+export type ProductDocument = mongoose.Document & {
   createdAt: Date,
   updatedAt: Date,
 }
+
+const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 10)
 
 const productSchema = new mongoose.Schema({
   productId: {

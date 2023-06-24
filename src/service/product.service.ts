@@ -1,9 +1,10 @@
 import log from "../logger";
-import ProductModel from "../model/product.model";
+import ProductModel, { ProductDocument, ProductInput } from "../model/product.model";
+import { FilterQuery, UpdateQuery } from "mongoose";
 
-export const createProduct = async (userId: string, title: string, description: string, price: number, image: string) => {
+export const createProduct = async (productInput: ProductInput) => {
   try {
-    const product = await ProductModel.create({ userId, title, description, price, image });
+    const product = await ProductModel.create(productInput);
     return product.toJSON();
   }
   catch (e: any) {
@@ -12,9 +13,9 @@ export const createProduct = async (userId: string, title: string, description: 
   }
 }
 
-export const getProduct = async (productId: string) => {
+export const getProduct = async (searchQuery: FilterQuery<ProductDocument>) => {
   try {
-    const product = await ProductModel.findOne({ productId }).lean();
+    const product = await ProductModel.findOne(searchQuery).lean();
     return product ? product.toJSON() : false;
   } catch (e: any) {
     log.error(e);
@@ -32,9 +33,9 @@ export const getAllProducts = async () => {
   }
 }
 
-export const updateProduct = async (productId: string, title: string, description: string, price: number, image: string) => {
+export const updateProduct = async (searchQuery: FilterQuery<ProductDocument>, update: UpdateQuery<ProductDocument>) => {
   try {
-    const product = await ProductModel.findOneAndUpdate({ productId }, { title, description, price, image }, { new: true }).lean();
+    const product = await ProductModel.findOneAndUpdate(searchQuery, update, { new: true }).lean();
     return product ? product.toJSON() : false;
   } catch (e: any) {
     log.error(e);
@@ -42,9 +43,9 @@ export const updateProduct = async (productId: string, title: string, descriptio
   }
 }
 
-export const deleteProduct = async (productId: string) => {
+export const deleteProduct = async (searchQuery: FilterQuery<ProductDocument>) => {
   try {
-    const product = await ProductModel.findOneAndDelete({ productId }).lean();
+    const product = await ProductModel.findOneAndDelete(searchQuery).lean();
     return product ? product.toJSON() : false;
   } catch (e: any) {
     log.error(e);

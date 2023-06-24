@@ -1,9 +1,12 @@
 import mongoose from "mongoose"
 import { UserDocument } from "./user.model"
 
-export type SessionDocument = mongoose.Document & {
+export type SessionInput = {
   userId: UserDocument['_id']
   isValid: boolean
+}
+
+export type SessionDocument = mongoose.Document & SessionInput & {
   createdAt: Date
   updatedAt: Date
 }
