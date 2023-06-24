@@ -1,5 +1,4 @@
 import mongoose from "mongoose"
-
 import { UserDocument } from "./user.model"
 
 export type SessionDocument = mongoose.Document & {
@@ -24,6 +23,6 @@ const sessionSchema = new mongoose.Schema({
   collection: "sessions",
 })
 
-const SessionModel = mongoose.model("Session", sessionSchema)
+const SessionModel = mongoose.model<SessionDocument>("Session", sessionSchema)
 
 export default SessionModel
