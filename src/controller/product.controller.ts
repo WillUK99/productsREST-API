@@ -2,7 +2,6 @@ import { Request, Response } from 'express'
 import log from '../logger'
 import { asyncHandler } from '../utils/async.utils'
 import { CreateProductInput, UpdateProductInput, DeleteProductInput, GetProductInput } from '../schema/product.schema'
-import { findSessions } from '../service/session.service'
 import { createProduct, deleteProduct, getAllProducts, getProduct, updateProduct } from '../service/product.service'
 
 export const createProductHandler = asyncHandler(async (req: Request<{}, {}, CreateProductInput['body']>, res: Response) => {
