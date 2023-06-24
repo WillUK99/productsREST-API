@@ -13,9 +13,9 @@ export const createProduct = async (productInput: ProductInput) => {
   }
 }
 
-export const getProduct = async (searchQuery: FilterQuery<ProductDocument>) => {
+export const getProduct = async (productData: FilterQuery<ProductDocument>) => {
   try {
-    const product = await ProductModel.findOne(searchQuery).lean();
+    const product = await ProductModel.findOne(productData).lean();
     return product ? product.toJSON() : false;
   } catch (e: any) {
     log.error(e);
@@ -33,9 +33,9 @@ export const getAllProducts = async () => {
   }
 }
 
-export const updateProduct = async (searchQuery: FilterQuery<ProductDocument>, update: UpdateQuery<ProductDocument>) => {
+export const updateProduct = async (productData: FilterQuery<ProductDocument>, update: UpdateQuery<ProductDocument>) => {
   try {
-    const product = await ProductModel.findOneAndUpdate(searchQuery, update, { new: true }).lean();
+    const product = await ProductModel.findOneAndUpdate(productData, update, { new: true }).lean();
     return product ? product.toJSON() : false;
   } catch (e: any) {
     log.error(e);
@@ -43,9 +43,9 @@ export const updateProduct = async (searchQuery: FilterQuery<ProductDocument>, u
   }
 }
 
-export const deleteProduct = async (searchQuery: FilterQuery<ProductDocument>) => {
+export const deleteProduct = async (productData: FilterQuery<ProductDocument>) => {
   try {
-    const product = await ProductModel.findOneAndDelete(searchQuery).lean();
+    const product = await ProductModel.findOneAndDelete(productData).lean();
     return product ? product.toJSON() : false;
   } catch (e: any) {
     log.error(e);
