@@ -20,10 +20,6 @@ export const createProductHandler = asyncHandler(async (req: Request<{}, {}, Cre
 })
 
 export const getProductHandler = asyncHandler(async (req: Request<GetProductInput['params']>, res: Response) => {
-  const userId = res.locals.user._id
-
-  if (!userId) return res.sendStatus(401)
-
   try {
     const productId = req.params.productId
     const product = await getProduct({ productId })
@@ -38,10 +34,6 @@ export const getProductHandler = asyncHandler(async (req: Request<GetProductInpu
 })
 
 export const getAllProductsHandler = asyncHandler(async (req: Request, res: Response) => {
-  const userId = res.locals.user._id
-
-  if (!userId) return res.sendStatus(401)
-
   try {
     const products = await getAllProducts()
     return res.json(products)
