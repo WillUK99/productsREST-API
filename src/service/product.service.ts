@@ -5,7 +5,7 @@ import { FilterQuery, UpdateQuery } from "mongoose";
 export const createProduct = async (productInput: ProductInput) => {
   try {
     const product = await ProductModel.create(productInput);
-    return product ? product : false;
+    return product
   }
   catch (e: any) {
     log.error(e);

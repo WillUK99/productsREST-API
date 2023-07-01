@@ -11,6 +11,7 @@ export type ProductInput = {
 }
 
 export type ProductDocument = mongoose.Document & ProductInput & {
+  productId: string,
   createdAt: Date,
   updatedAt: Date,
 }
