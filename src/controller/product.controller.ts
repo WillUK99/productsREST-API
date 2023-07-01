@@ -54,9 +54,9 @@ export const updateProductHandler = asyncHandler(async (req: Request<UpdateProdu
     const product = await getProduct({ productId })
 
     if (!product) return res.sendStatus(404)
-    if (product.userId !== userId) return res.sendStatus(403)
+    if (String(product.userId) !== userId) return res.sendStatus(403)
 
-    const updatedProduct = await updateProduct({ product }, productDataToUpdate)
+    const updatedProduct = await updateProduct({ productId }, productDataToUpdate)
 
     return res.json(updatedProduct)
   } catch (e: any) {
@@ -75,9 +75,9 @@ export const deleteProductHandler = asyncHandler(async (req: Request<DeleteProdu
     const product = await getProduct({ productId })
 
     if (!product) return res.sendStatus(404)
-    if (product.userId !== userId) return res.sendStatus(403)
+    if (String(product.userId) !== userId) return res.sendStatus(403)
 
-    const deletedProduct = await deleteProduct({ product })
+    const deletedProduct = await deleteProduct({ productId })
 
     return res.json(deletedProduct)
   } catch (e: any) {

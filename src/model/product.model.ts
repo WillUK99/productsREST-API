@@ -10,7 +10,7 @@ export type ProductInput = {
   image: string,
 }
 
-export type ProductDocument = mongoose.Document & {
+export type ProductDocument = mongoose.Document & ProductInput & {
   createdAt: Date,
   updatedAt: Date,
 }
