@@ -10,7 +10,7 @@ export const signJWT = (payload: Object, keyName: 'accessTokenPrivateKey' | 'ref
   })
 }
 
-export const verifyJWT = (token: string, keyName: 'accessTokenPublicKey' | 'refreshTokenPPublicKey') => {
+export const verifyJWT = (token: string, keyName: 'accessTokenPublicKey' | 'refreshTokenPublicKey') => {
   const publicKey = config.get<string>(keyName)
 
   try {
