@@ -41,14 +41,15 @@ userSchema.pre("save", async function (next) {
     const salt = await bcrypt.genSalt(config.get<number>("saltWorkFactor"))
     const hash = await bcrypt.hash(user.password, salt)
     user.password = hash
-    next()
+    return next()
   } catch (e: any) {
-    next(e)
+    return next(e)
   }
 })
 
 userSchema.methods.comparePassword = async function (newPassword: string): Promise<boolean> {
   const user = this as UserDocument
+
   return bcrypt.compare(newPassword, user.password).catch((e: any) => false)
 }
 

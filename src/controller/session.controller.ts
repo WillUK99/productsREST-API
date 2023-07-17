@@ -7,7 +7,7 @@ import { validateUser } from '../service/user.service'
 import { signJWT } from '../utils/jwt.utils'
 import config from 'config'
 
-export const createUserSessionHandler = asyncHandler(async (req: Request<{}, {}, CreateSessionInput['body']>, res: Response) => {
+export const createUserSessionHandler = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body
 
@@ -20,12 +20,12 @@ export const createUserSessionHandler = asyncHandler(async (req: Request<{}, {},
     const accessToken = signJWT({ ...user, session: session._id }, 'accessTokenPrivateKey', { expiresIn: config.get('accessTokenTtl') })
     const refreshToken = signJWT({ ...user, session: session._id }, 'refreshTokenPrivateKey', { expiresIn: config.get('refreshTokenTtl') })
 
-    return res.json({ accessToken, refreshToken })
+    return res.send({ accessToken, refreshToken })
   } catch (e: any) {
     log.error(e)
     return res.sendStatus(409)
   }
-})
+}
 
 export const getUserSessionsHandler = asyncHandler(async (req: Request, res: Response) => {
   const userId = res.locals.user._id

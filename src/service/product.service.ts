@@ -45,7 +45,6 @@ export const updateProduct = async (productData: FilterQuery<ProductDocument>, u
 
 export const deleteProduct = async (productData: FilterQuery<ProductDocument>) => {
   try {
-    console.log(productData);
     const product = await ProductModel.findOneAndDelete(productData).lean();
     return product ? product : false;
   } catch (e: any) {

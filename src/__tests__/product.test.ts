@@ -3,9 +3,8 @@ import supertest from "supertest";
 import { MongoMemoryServer } from 'mongodb-memory-server';
 
 import { createProduct } from '../service/product.service';
-import { createServer } from './../utils/server';
+import { createServer } from '../utils/server';
 import { signJWT } from '../utils/jwt.utils';
-import e from 'express';
 
 const app = createServer()
 
@@ -78,11 +77,11 @@ describe('Products', () => {
 
         expect(statusCode).toBe(200)
         expect(body).toEqual({
-          userId: expect.any(String),
           title: 'Test product',
           description: 'Test description',
           price: 999,
           image: 'https://test.com/image.png',
+          userId: expect.any(String),
           _id: expect.any(String),
           productId: expect.any(String),
           createdAt: expect.any(String),
