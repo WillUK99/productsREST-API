@@ -10,6 +10,17 @@ import * as SessionController from './controller/session.controller'
 import * as ProductController from './controller/product.controller'
 
 const routes = (app: Express) => {
+  /**
+   * @openapi
+   * /api/healthcheck:
+   *   get:
+   *     tags:
+   *       - Healthcheck
+   *     description: Check if the app is running
+   *     responses:
+   *       200:
+   *         description: App is running
+   */
   app.get('/api/healthcheck', (req: Request, res: Response) => res.sendStatus(200))
 
   // User routes
