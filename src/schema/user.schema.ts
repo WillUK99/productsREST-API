@@ -1,5 +1,49 @@
 import * as z from 'zod'
 
+/**
+ * @openapi
+ * components:
+ *    schemas:
+ *      CreateUserInput:
+ *        type: object
+ *        required: 
+ *          - email
+ *          - name 
+ *          - password  
+ *          - passwordConfirmation
+ *        properties:
+ *          email:
+ *            type: string
+ *            default: 'joe@blogs.com'
+ *            description: The user's email.
+ *          name:
+ *            type: string
+ *            default: 'Joe Blogs'
+ *            description: The user's name.
+ *          password:
+ *            type: string
+ *            default: 'supersecurepassword123'
+ *            description: The user's password.
+ *          passwordConfirmation:
+ *            type: string
+ *            default: 'supersecurepassword123'
+ *            description: The user's password confirmation.
+ *      CreateUserResponse:
+ *        type: object
+ *        properties:
+ *          email:
+ *            type: string
+ *          name: 
+ *            type: string
+ *          _id:
+ *            type: string
+ *          createdAt: 
+ *            type: string
+ *          updatedAt:
+ *            type: string
+ */
+
+
 export const createUserSchema = z.object({
   body: z.object({
     email: z.string({ required_error: 'Email is required' }).email('Email must be valid'),
