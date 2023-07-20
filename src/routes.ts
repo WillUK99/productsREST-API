@@ -15,42 +15,104 @@ const routes = (app: Express) => {
    * /api/healthcheck:
    *   get:
    *     tags:
-   *       - Healthcheck
+   *     - Healthcheck
    *     description: Check if the app is running
+   *     summary: Check if the app is running
    *     responses:
    *       200:
    *         description: App is running
    */
   app.get('/api/healthcheck', (req: Request, res: Response) => res.sendStatus(200))
 
+  /**
+   * @openapi
+   * /api/users:
+   *   get:
+   *     tags:
+   *       - User
+   *     summary: Get all users
+   *     description: Get all users 
+   *     responses:
+   *       200:
+   *         description: Success
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: array
+   *               items:
+   *                 $ref: '#/components/schemas/CreateUserResponse'
+   *   post:
+   *     tags:
+   *       - User
+   *     summary: Register a user
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             $ref: '#/components/schemas/CreateUserInput'
+   *     responses:
+   *       200:
+   *         description: Success
+   *         content:
+   *           application/json:
+   *             schema:
+   *               $ref: '#/components/schemas/CreateUserResponse'
+   *       409:
+   *         description: Conflict
+   *       400:
+   *         description: Bad request
+   */
+
   app.get('/api/users', UserController.getUsersHandler)
+  app.post('/api/users', verifyResource(createUserSchema), UserController.createUserHandler)
 
   /**
-     * @openapi
-     * '/api/users':
-     *  post:
-     *     tags:
-     *     - User
-     *     summary: Register a user
-     *     requestBody:
-     *      required: true
-     *      content:
-     *        application/json:
-     *           schema:
-     *              $ref: '#/components/schemas/CreateUserInput'
-     *     responses:
-     *      200:
-     *        description: Success
-     *        content:
-     *          application/json:
-     *            schema:
-     *              $ref: '#/components/schemas/CreateUserResponse'
-     *      409:
-     *        description: Conflict
-     *      400:
-     *        description: Bad request
-     */
-  app.post('/api/users', verifyResource(createUserSchema), UserController.createUserHandler)
+   * @openapi
+   * /api/sessions:
+   *   get:
+   *     tags:
+   *       - Session
+   *     summary: Get all sessions
+   *     description: Get all sessions
+   *     responses:
+   *       200:
+   *         description: Get all sessions for the current logged in user
+   *         content: 
+   *           application/json:
+   *             schema:
+   *               $ref: '#/components/schemas/GetSessionResponse'
+   *       403:
+   *         description: Unauthorised to get sessions
+   *   post:
+   *     tags:
+   *       - Session
+   *     summary: Create a session
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             $ref: '#/components/schemas/CreateSessionInput'
+   *     responses:
+   *       200:
+   *         description: Session created
+   *         content:
+   *           application/json:
+   *             schema:
+   *               $ref: '#/components/schemas/CreateSessionResponse'
+   *       401:
+   *         description: Unauthorised to create a session
+   *   delete:
+   *     tags:
+   *       - Session
+   *     summary: Delete a session
+   *     responses:
+   *       200:
+   *         description: Session deleted
+   *       403:
+   *         description: Unauthorised to delete a session
+   */
 
   app.get('/api/sessions', requireUser, SessionController.getUserSessionsHandler)
   app.post('/api/sessions', verifyResource(createSessionSchema), SessionController.createUserSessionHandler)

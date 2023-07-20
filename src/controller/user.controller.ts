@@ -9,7 +9,8 @@ import { CreateUserInput } from '../schema/user.schema'
 
 export const getUsersHandler = asyncHandler(async (req: Request, res: Response) => {
   const users = await User.find()
-  res.json(users)
+  const usersWithoutPassword = users.map((user) => omit(user.toJSON(), 'password'))
+  res.send(usersWithoutPassword)
 })
 
 export const createUserHandler = asyncHandler(async (req: Request<{}, {}, CreateUserInput['body']>, res: Response) => {

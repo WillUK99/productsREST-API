@@ -5,6 +5,8 @@ import * as z from 'zod'
  * components:
  *    schemas:
  *      CreateUserInput:
+ *        tags:
+ *         - User
  *        type: object
  *        required: 
  *          - email
