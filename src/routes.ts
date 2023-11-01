@@ -66,6 +66,7 @@ const routes = (app: Express) => {
 
   app.get('/api/users', UserController.getUsersHandler)
   app.post('/api/users', verifyResource(createUserSchema), UserController.createUserHandler)
+  app.get('/api/me', requireUser, UserController.getCurrentUserHandler)
 
   /**
    * @openapi

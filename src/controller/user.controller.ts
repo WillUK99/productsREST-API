@@ -22,3 +22,7 @@ export const createUserHandler = asyncHandler(async (req: Request<{}, {}, Create
     return res.sendStatus(409)
   }
 })
+
+export const getCurrentUserHandler = asyncHandler(async (req: Request, res: Response) => {
+  return res.send(res.locals.user)
+})

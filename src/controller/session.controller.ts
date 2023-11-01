@@ -20,6 +20,24 @@ export const createUserSessionHandler = async (req: Request, res: Response) => {
     const accessToken = signJWT({ ...user, session: session._id }, 'accessTokenPrivateKey', { expiresIn: config.get('accessTokenTtl') })
     const refreshToken = signJWT({ ...user, session: session._id }, 'refreshTokenPrivateKey', { expiresIn: config.get('refreshTokenTtl') })
 
+    res.cookie('accessToken', accessToken, {
+      maxAge: 900000,
+      httpOnly: true,
+      domain: 'localhost',
+      path: '/',
+      sameSite: 'strict',
+      secure: process.env.NODE_ENV === 'production',
+    })
+
+    res.cookie('refreshToken', refreshToken, {
+      maxAge: 3.154e10,
+      httpOnly: true,
+      domain: 'localhost',
+      path: '/',
+      sameSite: 'strict',
+      secure: process.env.NODE_ENV === 'production',
+    })
+
     return res.send({ accessToken, refreshToken })
   } catch (e: any) {
     log.error(e)

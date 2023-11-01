@@ -1,6 +1,7 @@
 import express from "express"
 import routes from '../routes'
 import deserialiseUser from "../middleware/deserialiseUser"
+import cookieParser from "cookie-parser"
 
 
 export const createServer = () => {
@@ -8,6 +9,7 @@ export const createServer = () => {
 
   app.use(express.json())
   app.use(express.urlencoded({ extended: false }))
+  app.use(cookieParser());
   app.use(deserialiseUser)
   routes(app)
 
